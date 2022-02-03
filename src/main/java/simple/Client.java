@@ -13,7 +13,7 @@ public class Client {
 
     public static void main(String[] args) {
         try {
-            Socket socket = new Socket(InetAddress.getLocalHost(), 1010);
+            Socket socket = new Socket(InetAddress.getLocalHost(), 1020);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

@@ -1,7 +1,6 @@
 package simple;
 
 import com.google.common.primitives.Bytes;
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,10 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Server {
@@ -30,7 +26,7 @@ public class Server {
             System.out.println("ready to read");
             while (true) {
                 byte[] bytes = new byte[20];
-                int num = 0;
+                int num;
                 int count = 0;
                 List<Byte> bytesList = new ArrayList<>();
                 while (true) {
@@ -45,7 +41,8 @@ public class Server {
                     }
                 }
                 if (count > 0) {
-                    out.write(Bytes.toArray(bytesList));
+                    String responce = "RESPONSE FROM SERVER: " + new String(Bytes.toArray(bytesList));
+                    out.write(responce.getBytes(StandardCharsets.UTF_8));
                     out.flush();
                 }
             }
