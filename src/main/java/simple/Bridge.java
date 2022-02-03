@@ -19,13 +19,14 @@ public class Bridge {
             ServerSocket ss = new ServerSocket(1020);
             Socket client = ss.accept();
             Socket server = new Socket(InetAddress.getLocalHost(), 1010);
+            Thread.sleep(2000);
             DataInputStream clientIn = new DataInputStream(client.getInputStream());
             DataInputStream serverIn = new DataInputStream(server.getInputStream());
             DataOutputStream clientOut = new DataOutputStream(client.getOutputStream());
             DataOutputStream serverOut = new DataOutputStream(server.getOutputStream());
 
             while (true) {
-                byte[] bytes = new byte[20];
+                byte[] bytes = new byte[1000000];
                 int num;
                 int count = 0;
                 List<Byte> bytesList = new ArrayList<>();
@@ -48,7 +49,7 @@ public class Bridge {
                 }
                 System.out.println(builder);
 
-                byte[] bytes2 = new byte[20];
+                byte[] bytes2 = new byte[1000000];
                 int num2;
                 int count2 = 0;
                 List<Byte> bytesList2 = new ArrayList<>();
@@ -56,6 +57,7 @@ public class Bridge {
                 builder2.append("Client <- Server ");
                 while (true) {
                     num2 = serverIn.read(bytes2);
+
                     addToList(bytesList2, bytes2, num2);
                     builder2.append(new String(bytes2, 0, num2));
                     if(num2 > 0) {
@@ -73,6 +75,8 @@ public class Bridge {
             }
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

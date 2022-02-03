@@ -32,7 +32,7 @@ public class Server {
                 while (true) {
                     num = in.read(bytes);
                     addToList(bytesList, bytes, num);
-                    System.out.println(new String(bytes, 0 , num));
+//                    System.out.println(new String(bytes, 0 , num));
                     if(num > 0) {
                         count++;
                     }
@@ -41,8 +41,8 @@ public class Server {
                     }
                 }
                 if (count > 0) {
-                    String responce = "RESPONSE FROM SERVER: " + new String(Bytes.toArray(bytesList));
-                    out.write(responce.getBytes(StandardCharsets.UTF_8));
+                    String response = "RESPONSE FROM SERVER: " + new String(Bytes.toArray(bytesList));
+                    out.write(response.getBytes(StandardCharsets.UTF_8));
                     out.flush();
                 }
             }
