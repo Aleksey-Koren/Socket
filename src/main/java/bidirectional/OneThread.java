@@ -25,7 +25,8 @@ public class OneThread implements Runnable {
     public void run() {
 
         try {
-            while (true) {
+            boolean isStoped = false;
+            while (!isStoped) {
                 byte[] bytes = new byte[1000000];
                 int num;
                 int count = 0;
@@ -34,6 +35,10 @@ public class OneThread implements Runnable {
                 builder.append(outputPrefix);
                 while (true) {
                     num = in.read(bytes);
+                    if (num == -1) {
+                        isStoped = true;
+                        break;
+                    }
                     Utils.addToList(bytesList, bytes, num);
                     builder.append(new String(bytes, 0, num));
                     if(num > 0) {
@@ -51,7 +56,13 @@ public class OneThread implements Runnable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 }

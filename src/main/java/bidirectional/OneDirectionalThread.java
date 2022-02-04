@@ -16,7 +16,7 @@ public class OneDirectionalThread implements Runnable{
     @Override
     public void run() {
         try {
-            Socket server = new Socket("localhost", 3306);
+            Socket server = new Socket("localhost", 8081);
             DataInputStream clientIn = new DataInputStream(client.getInputStream());
             DataOutputStream serverOut = new DataOutputStream(server.getOutputStream());
             DataInputStream serverIn = new DataInputStream(server.getInputStream());
