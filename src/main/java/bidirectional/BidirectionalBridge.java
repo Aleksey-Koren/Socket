@@ -1,7 +1,6 @@
-package simple;
+package bidirectional;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -12,8 +11,7 @@ public class BidirectionalBridge {
             ServerSocket ss = new ServerSocket(1050);
             while (true) {
                 Socket client = ss.accept();
-                Socket server = new Socket(InetAddress.getByName("localhost"), 3306);
-                BridgeThread bridge = new BridgeThread(client);
+                OneDirectionalThread bridge = new OneDirectionalThread(client);
                 new Thread(bridge).start();
             }
         } catch (IOException e) {
