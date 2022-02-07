@@ -1,24 +1,27 @@
-package bidirectional;
+package com.bidirectional;
 
 import com.google.common.primitives.Bytes;
-import simple.Utils;
+import com.utils.Utils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class OneThread implements Runnable {
 
     private String outputPrefix;
     private DataInputStream in;
     private DataOutputStream out;
+    FuncInterface function;
 
-    public OneThread(String outputPrefix, DataInputStream in, DataOutputStream out) {
+    public OneThread(String outputPrefix, DataInputStream in, DataOutputStream out, FuncInterface function) {
         this.outputPrefix = outputPrefix;
         this.in = in;
         this.out = out;
+        this.function = function;
     }
 
     @Override
@@ -32,7 +35,7 @@ public class OneThread implements Runnable {
                 int count = 0;
                 List<Byte> bytesList = new ArrayList<>();
                 StringBuilder builder = new StringBuilder();
-                builder.append(outputPrefix);
+                builder.append(outputPrefix + Thread.currentThread().getName() + "\n");
                 while (true) {
                     num = in.read(bytes);
                     if (num == -1) {
@@ -57,12 +60,7 @@ public class OneThread implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                in.close();
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            function.doWork();
         }
     }
 }
